@@ -1,6 +1,8 @@
 # Makrobot DSL
 
-The project contains the implementation of the Robot DSL using Kotlin DSL Development Technologie.
+The project contains the implementation of the Makrobot DSL using Kotlin DSL Development Technologie.
+
+With the Makrobot DSL you can create your robot, defining its parts from head to chassis, and then create scripts for it.
 
 ## Links
 1. [Robot Description](#robot-description)
