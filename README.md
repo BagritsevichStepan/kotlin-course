@@ -2,7 +2,7 @@
 The repository contains solutions to some of the tasks, which were solved during Kotlin course at ITMO University.
 
 ## Tasks
-+ [Wikipedia Statistics]() - Program calculate statistics about the articles of the Russian Wikipedia
++ [Wikipedia Statistics](https://github.com/BagritsevichStepan/kotlin-course/tree/main/wikipedia-statistics) - Program calculate statistics about the articles of the Russian Wikipedia
 
   *Technologies that were used: TODO*
 
