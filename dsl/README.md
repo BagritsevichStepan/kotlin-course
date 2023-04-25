@@ -1,89 +1,155 @@
 # Makrobot DSL
 
-Демонстрация возможностей Kotlin для создания DSL на примере DSL для сценариев детского робота.
+The project contains the implementation of the Robot DSL using Kotlin DSL Development Technologie.
 
-DSL определен в пакете `csc.makrobot.dsl` отдельно от основного API.
+## Links
+1. [Robot Description](#robot-description)
+2. [Scenario Description](#scenario-description)
+3. [Destructuring Declaration](#destructuring-declaration)
 
-#### Задание:
-
-Допишите DSL для описания и создания робота, позволяющий использовать такой синтаксис:
-
+## Robot Description
+Using DSL you can create an `MakroBot` instance. For example:
 ```
-    val робот = робот("Wall-E") {
-        голова {
-            пластик толщиной 2
+val robot = robot("Wall-E") {
+    head {
+        plastic withThickness 2
 
-            глаза {
-                лампы {
-                    количество = 2
-                    яркость = 10
-                }
-                диоды {
-                    количество = 1
-                    яркость = 3
-                }
+        eyes {
+            lampEyes {
+                count = 2
+                illumination = 10
             }
-
-            рот {
-                динамик {
-                    мощность = 3
-                }
+            ledEyes {
+                count = 1
+                illumination = 3
             }
         }
 
-        туловище {
-            металл толщиной 1
-
-            надпись {
-                +"I don't want to survive."
-                +"I want live."
+        mouth {
+            speaker {
+                power = 3
             }
         }
-
-        руки {
-            пластик толщиной 3
-            нагрузка = легкая - средняя
-        }
-
-        шасси = гусеницы шириной 10
     }
+
+    body {
+        metal withThickness 1
+
+        inscription {
+            +"I don't want to survive."
+            +"I want live."
+        }
+    }
+
+    hands {
+        plastic withThickness 3
+        load = Light - Heavy
+    }
+
+    chassis = caterpillar width 10
+}
 ```
 
-Другие варианты для `шасси`, которые нужно поддержать:
+The description of the robot must contain the `head`, `body`, `hands`, and `chassis` description. You can also give the robot a name.
+
+For the head, body and arms, specify the `material` from which they are made and material thickness.
+
+The `head` consists of eyes and a mouth. The eyes can be Led and Lamp. The mouth must contain speaker description.
 ```
-   шасси = ноги
-   
-   шасси = колеса {
-        диаметр = 4
-        количество = 2
-   }
+head {
+    plastic withThickness 2
+
+    eyes {
+        lampEyes {
+            count = 2
+            illumination = 10
+        }
+        ledEyes {
+            count = 1
+            illumination = 3
+        }
+    }
+
+    mouth {
+        speaker {
+            power = 3
+        }
+    }
+}
 ```
 
-В результате выполнения кода выше должен быть собран экземпляр класса `MakroBot`.
+To the `body` description inscriptions must be added. In inscription block use unary plus to add new inscription.
 
-Весь API находится в пакете `csc.makrobot.api`, его изменять нельзя.
+```
+body {
+    metal withThickness 1
 
-Ваш DSL должен появиться в пакете `csc.makrobot.dsl`.
+    inscription {
+        +"I don't want to survive."
+        +"I want live."
+    }
+}
+```
 
-Данный синтаксис не претендует на адекватность, полноту и единый стиль.
-Его цель - использовать разные инструменты языка Kotlin для DSL.
+In the description of the hands you must specify the load they can withstand (using minus operator). Supported load levels (in ascending order):
+`VeryLight`, `Light`, `Medium`, `Heavy`, `VeryHeavy`, `Enormous`.
+```
+hands {
+    plastic withThickness 3
+    load = Light - Heavy
+}
+```
 
-В проекте есть тесты, которыми вы можете себя проверять.
-Тесты также нельзя модифицировать.
+Supported types of the `chassis`:
+```
+chassis = caterpillar width 10
+
+chassis = legs
+
+chassis = wheels {
+    diameter = 4
+    count = 2
+}
+```
 
 
-### Бонусные баллы
-Мы понимаем, что некоторым людям написание dsl на русском языке может доставить физическую боль, и всё же
-по разным причинам было решено не менять исходное задание от csc.
-Однако же вам предлагается самостоятельно переписать используемые функции на английский язык за один бонусный балл.
-Будьте аккуратны, после изменений смысл команд должен быть всё ещё понятен и полученный dsl должен выглядеть связно.
+## Scenario Description
+Using DSL you can also create scripts for the robot. For example:
+```
+scenario {
+    robot {
+        speed = 2
+        power = 4
+    }
 
-### Дедлайны
-Гарантированные проверки:
-* 3 проверки -- 14.11
-* 2 проверки -- 17.11
-* 1 проверка -- 20.11
+    robot forward 5
+    robot back 2
+    robot.turn()
 
-**23.11** -- жёсткий дедлайн.
+    robot pronounce {
+        +"I want to ride my bicycle"
+        +"I want to ride it where I like"
+    }
 
-Удачи!
+    schedule {
+        repeat(Tue at 10, Sat at 12)
+        except(13)
+        repeat(Wed..Fri at 8)
+    }
+}
+```
+
+In scenario block you can specify speed and power of the robot instance, add operations go forward, backward, turn around, pronounce the text. You can also specify schedule of the scenario.
+
+## Destructuring Declaration
+`MakroBot` instance supports destructuring declaration:
+```
+operator fun MakroBot.component1() = name
+operator fun MakroBot.component2() = speed
+operator fun MakroBot.component3() = power
+```
+So you can use in your variables declaration:
+```
+val (name, speed) = robot
+```
+
