@@ -43,11 +43,6 @@ fun main() {
         }
 
         chassis = caterpillar width 10
-        chassis = legs
-        chassis = wheels {
-            diameter = 4
-            count = 2
-        }
     }
 
     scenario {
