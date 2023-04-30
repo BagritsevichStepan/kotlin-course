@@ -2,6 +2,10 @@
 The repository contains solutions to some tasks, which were solved during Kotlin Course at ITMO University.
 
 ## Tasks
++ [Crawler Full Stack App](https://github.com/BagritsevichStepan/crawler-full-stack-app) - Program does something. TODO.
+
+  *Technologies that were used: TODO*
+
 + [Wikipedia Statistics](https://github.com/BagritsevichStepan/kotlin-course/tree/main/wikipedia-statistics) - Program calculate statistics about the articles of the Russian Wikipedia
 
   *Technologies that were used: TODO*
